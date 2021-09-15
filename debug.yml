@@ -1,0 +1,23 @@
+- hosts: localhost
+  vars:
+    ovpn_tmp_dir: /home/philip/workspace/omv
+    ovpn_download_url: https://pritunl.nordmann.ninja/key/7MnVlEgvEHdecEF76RTTKvxL2ADFNbbE.zip
+  tasks:
+    - name: download openvpn profile
+      get_url:
+        url: "{{ ovpn_download_url }}"
+        dest: "{{ ovpn_tmp_dir }}/ovpn.zip"
+    - name: test  
+      unarchive:
+        src: "{{ ovpn_tmp_dir }}/ovpn.zip"
+        dest: "{{ ovpn_tmp_dir }}"
+        list_files: yes
+        remote_src: yes
+      register: ovpn_files
+    - debug:
+        var: ovpn_files
+    
+    - name: copy to directory
+      copy:
+        src: "{{ ovpn_tmp_dir }}/{{ ovpn_files.files[0] }}"
+        dest: "{{ ovpn_tmp_dir }}/vpn.conf"

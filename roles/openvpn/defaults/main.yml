@@ -1,0 +1,9 @@
+to_install:
+  - openvpn
+  - unzip
+
+ovpn_tmp_dir: /tmp/ovpn
+
+ovpn_download_url: https://pritunl.nordmann.ninja/key/918748G1qDe0fOKHNewyXmbQsr9hj5Ya.zip
+ovpn_username: myuser
+ovpn_password: mypass

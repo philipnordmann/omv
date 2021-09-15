@@ -1,0 +1,59 @@
+- name: install packages
+  apt:
+    pkg: "{{ to_install }}"
+    state: latest
+    update_cache: yes
+  become: yes
+
+- name: create tmp folder
+  file:
+    path: "{{ ovpn_tmp_dir }}"
+    state: directory
+
+- name: download openvpn profile
+  get_url:
+    url: "{{ ovpn_download_url }}"
+    dest: "{{ ovpn_tmp_dir }}/ovpn.zip"
+
+- name: extract zip
+  unarchive:
+    src: "{{ ovpn_tmp_dir }}/ovpn.zip"
+    dest: "{{ ovpn_tmp_dir }}"
+    list_files: yes
+    remote_src: yes
+  register: ovpn_files
+
+- name: copy to directory
+  copy:
+    src: "{{ ovpn_tmp_dir }}/{{ ovpn_files.files[0] }}"
+    dest: "/etc/openvpn/vpn.conf"
+  become: yes
+
+- name: create auth file
+  template:
+    src: auth.txt.j2
+    dest: /etc/openvpn/auth.txt
+    mode: 600
+  become: yes
+
+- name: change auth-user-pass
+  lineinfile:
+    path: /etc/openvpn/vpn.conf
+    line: "auth-user-pass /etc/openvpn/auth.txt"
+    regexp: "^auth-user-pass.*"
+    state: present
+  become: yes
+
+- name: disable udp6
+  lineinfile:
+    path: /etc/openvpn/vpn.conf
+    regexp: "^remote .* udp6$"
+    state: absent
+  become: yes
+
+- name: enable vpn autostart
+  lineinfile:
+    path: /etc/default/openvpn
+    line: "AUTOSTART=vpn"
+    state: present
+  become: yes
