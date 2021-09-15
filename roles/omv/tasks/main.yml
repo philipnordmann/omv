@@ -1,0 +1,10 @@
+- name: download install script
+  get_url:
+    url: https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/install
+    dest: /tmp/omv-install
+    mode: 777
+  become: yes
+
+- name: install script
+  shell: /tmp/omv-install
+  become: yes

@@ -4,7 +4,7 @@ OVPN_TMP_DL_URL="${1}"
 OVPN_USERNAME="${2}"
 OVPN_PASSWORD="${3}"
 
-if [ "${1}" == "" ||  "${2}" == "" ||  "${3}" == "" ]; then
+if [[ "${1}" == "" ||  "${2}" == "" ||  "${3}" == "" ]]; then
     echo "not all arguments provided"
     exit 1
 fi
