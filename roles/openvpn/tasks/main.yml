@@ -52,8 +52,8 @@
   become: yes
 
 - name: enable vpn autostart
-  lineinfile:
-    path: /etc/default/openvpn
-    line: "AUTOSTART=vpn"
-    state: present
+  systemd:
+    name: "openvpn@vpn.service"
+    state: started
+    enabled: yes
   become: yes
