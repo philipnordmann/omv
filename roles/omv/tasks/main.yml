@@ -1,3 +1,8 @@
+- name: set hostname
+  hostname:
+    name: "{{ omv_hostname }}"
+  become: yes
+
 - name: download install script
   get_url:
     url: https://github.com/OpenMediaVault-Plugin-Developers/installScript/raw/master/install
