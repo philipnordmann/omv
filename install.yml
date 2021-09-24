@@ -1,5 +1,5 @@
 - hosts: localhost
   roles:
+    - update
     - openvpn
     - omv
-    # - rsync
