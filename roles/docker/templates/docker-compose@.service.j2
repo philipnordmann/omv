@@ -1,0 +1,14 @@
+[Unit]
+Description=Docker compose service for %i
+Requires=docker.service
+After=docker.service
+
+[Service]
+Type=simple
+RemainAfterExit=true
+WorkingDirectory={{compose_location}}/%i
+ExecStart=/usr/local/bin/docker-compose up --remove-orphans
+ExecStop=/usr/local/bin/docker-compose down
+
+[Install]
+WantedBy=multi-user.target

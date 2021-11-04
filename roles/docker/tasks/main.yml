@@ -1,0 +1,9 @@
+- include: install_docker_debian.yml
+  when: ansible_distribution == 'Debian'
+  become: yes
+  notify: Restart ssh
+
+- include: install_docker_ubuntu.yml
+  when: ansible_distribution == 'Ubuntu'
+  become: yes
+  notify: Restart ssh

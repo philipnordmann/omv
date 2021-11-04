@@ -1,0 +1,7 @@
+git_repo_url: github.com/myname/myrepo.git
+git_username: myname
+git_token: XXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+tinc_name: myname
+
+tinc_container_version: v2.0.1

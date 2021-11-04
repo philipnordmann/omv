@@ -1,0 +1,53 @@
+
+- name: Install required system packages
+  apt: 
+    name: "{{ item }}"
+    state: latest 
+    update_cache: yes
+  loop: "{{install_packages['debian']}}"
+
+- name: Add Docker GPG apt Key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: Add Docker Repository
+  apt_repository:
+    repo: "deb https://download.docker.com/linux/ubuntu {{ hostvars['localhost']['ansible_lsb']['codename'] }} stable"
+    state: present
+
+- name: Update apt and install docker-ce
+  apt: 
+    update_cache: yes 
+    name: docker-ce
+    state: latest
+
+- name: Install Docker Module for Python
+  pip:
+    name: docker
+
+- name: install docker-compose
+  pip:
+    name: docker-compose
+
+- name: add current user to docker group
+  user:
+    name: "{{ ansible_env.USER | default('philip') }}"
+    groups: 
+      - docker
+    append: yes
+
+- name: copy service unit
+  copy:
+    src: docker@.service
+    dest: /etc/systemd/system/
+
+- name: create compose location
+  file:
+    path: "{{ compose_location }}"
+    state: directory
+
+- name: create compose service
+  template:
+    src: docker-compose@.service.j2
+    dest: /etc/systemd/system/docker-compose@.service

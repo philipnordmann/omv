@@ -1,0 +1,24 @@
+- name: install tinc docker
+  docker_container:
+    name: tinc
+    image: "ghcr.io/philipnordmann/tinc:{{ tinc_container_version }}"
+    volumes:
+      - "{{ ansible_env.HOME }}/.config/tinc/config:/config"
+    capabilities:
+      - NET_ADMIN
+    network_mode: host
+    env:
+      GIT_REPOSITORY: "{{ git_repo_url }}"
+      GIT_USERNAME: "{{ git_username }}"
+      GIT_TOKEN: "{{ git_token }}"
+      TINC_NAME: "{{ tinc_name }}"
+    state: stopped
+  become: yes
+
+- name: install and start systemd service
+  systemd:
+    name: docker@tinc.service
+    state: started
+    enabled: yes
+    daemon-reload: yes
+  become: yes
