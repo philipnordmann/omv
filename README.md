@@ -2,9 +2,10 @@
 
 ## how to use
 ```bash
-OVPN_ZIP_URL=<url>
-OVPN_USERNAME=<user>
-OVPN_PASSWORD=<pw>
+TINC_NAME=<name>
+GIT_URL=<url>
+GIT_USERNAME=<user>
+GIT_TOKEN=<pw>
 
-git clone https://github.com/philipnordmann/omv.git && cd omv && ./install.sh $OVPN_ZIP_URL $OVPN_USERNAME $OVPN_PASSWORD
+git clone https://github.com/philipnordmann/omv.git && cd omv && ./install.sh $TINC_NAME $GIT_URL $GIT_USERNAME $GIT_TOKEN
 ```
