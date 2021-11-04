@@ -8,5 +8,6 @@ install_packages:
         - virtualenv
         - python3-setuptools
         - lsb-release
+        - libffi-dev
 
 compose_location: /etc/compose
