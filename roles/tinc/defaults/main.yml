@@ -4,4 +4,4 @@ git_token: XXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 tinc_name: myname
 
-tinc_container_version: v2.0.1
+tinc_container_version: v2.1.0
